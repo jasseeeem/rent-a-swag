@@ -36,3 +36,18 @@
     transform: rotate(360deg);
   }
 }
+
+.profile-pic {
+  max-height: 40px;
+  border-radius: 50%;
+}
+
+.card {
+  width: 18rem;
+}
+
+.card-image {
+  width: 100%;
+  height: 20rem;
+  object-fit: cover;
+}
