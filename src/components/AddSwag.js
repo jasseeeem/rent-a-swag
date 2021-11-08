@@ -7,9 +7,11 @@ import {
     FormGroup,
     FormFeedback,
 } from "reactstrap";
-import { storage, firestore } from '../services/Firebase.js';
-
+import { storage, firestore, auth } from '../services/Firebase.js';
+import { useNavigate } from 'react-router-dom';
 const AddSwag = () => {
+
+    const navigate = useNavigate();
 
     const [productName, setProductName] = useState("");
     const [price, setPrice] = useState(0);
@@ -39,7 +41,6 @@ const AddSwag = () => {
         });
 
         const imageURL = await Promise.all(promises);
-
         const db = firestore;
         db.collection("posts").add({
             productName: productName,
@@ -49,12 +50,15 @@ const AddSwag = () => {
             description: description,
             longitude: 0,
             latitude: 0,
-            images: imageURL
+            images: imageURL,
+            modifiedAt: + new Date(),
+            username: auth.currentUser.displayName
         }).then(() => {
             console.log("Data added");
         }).catch(err => {
             console.error("Error adding data: ", err);
         })
+        navigate('/');
         setAdding(false);
         return;
     }
